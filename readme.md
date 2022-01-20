@@ -18,9 +18,22 @@
 
 "host" URL de pandora + /pandora_console/include/api.php
 ```
+## Instal·lació
+
+- Utilitzant pip:
+
+  ```pip install PandoraFMS-API```
+
 ## Ús
-- Executar el fitxer `PandoraFMS_API.py` o `PandoraFMS_API.cpython-39.pyc` amb les opcions adients. Llavors les dades es guardaran a `dadesPandora.json` i si la opcio de excel esta activada tambe es guardara a `PandoraResum.xlsx`
-- Opcions:
+### Maneres d'execució del programa (ordenades per recomenades)
+- A la linea de commandes `PandoraFMS-API [opcions]`
+- ```python -m PandoraAPI [opcions]```
+- ```./PandoraFMS_API-runner.py [opcions] ```
+- Executar el fitxer `PandoraFMS_API.py` o `PandoraFMS_API.cpython-39.pyc` amb les opcions adients. Llavors les dades es guardaran a `dadesPandora.json`i si la opcio de excel esta activada tambe es guardara a `PandoraResum.xlsx`
+
+
+
+### Opcions
 ```
 usage: PandoraFMS_API.cpython-39.pyc [-h] [-e] [-f RUTA] [-q] [-v] [-w URL]
 
