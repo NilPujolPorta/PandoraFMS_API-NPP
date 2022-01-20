@@ -1,0 +1,5 @@
+requests
+openpyxl
+argparse
+mysql-connector-python
+pyyalm

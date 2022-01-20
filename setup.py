@@ -31,8 +31,7 @@ setup(name='PandoraFMS-API',
           "openpyxl",
           "pyyaml",
           "requests",
-          "mysql-connector-python",
-          "tqdm"
+          "mysql-connector-python"
       ],
 	entry_points = {
         "console_scripts": ['PandoraFMS_API-NPP = PandoraAPI.PandoraFMS_API:main']
