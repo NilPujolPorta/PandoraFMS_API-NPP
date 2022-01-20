@@ -3,6 +3,7 @@ PandoraAPI/PandoraResum.xlsx
 PandoraAPI/dadesPandora.json
 PandoraAPI/errorLogs/*
 PandoraAPI/compilar.bat
+publish.bat
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *$py.class
