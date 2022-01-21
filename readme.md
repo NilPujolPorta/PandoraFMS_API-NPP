@@ -24,6 +24,9 @@
 
   ```pip install PandoraFMS-API```
 
+- Clonar el repositori
+```gh repo clone NilPujolPorta/PandoraFMS_API-NPP```
+
 ## Ús
 ### Maneres d'execució del programa (ordenades per recomenades)
 - A la linea de commandes `PandoraFMS-API [opcions]`
@@ -45,7 +48,7 @@ optional arguments:
   -f RUTA, --file RUTA  Especificar el fitxer de excel a on guardar. Per defecte es: PandoraResum.xlsx
   -q, --quiet           Nomes mostra els errors i el missatge de acabada per pantalla.
   -v, --versio          Mostra la versio
-  -w URL, --web URL     Especificar la web de PandoraFMS a on accedir. Per defecte es: http://pandora.eio.cat/pandora_console/include/api.php
+  -w URL, --web URL     Especificar la web de PandoraFMS a on accedir.
 ```
 
 ### Proximament:
