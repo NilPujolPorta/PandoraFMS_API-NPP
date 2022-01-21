@@ -1,16 +1,17 @@
-import requests
 import json
 from datetime import datetime
 import datetime
 from os.path import exists
+import os
+
 from openpyxl import Workbook
 from openpyxl import load_workbook
-import os
+import requests
 import argparse
 import mysql.connector
 import yaml
 
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 
 def main():
 	parser = argparse.ArgumentParser(description='Una API per a recullir informacio de la web de PandoraFMS.')
@@ -18,11 +19,14 @@ def main():
 	parser.add_argument('-f', '--file', help='Especificar el fitxer de excel a on guardar. Per defecte es: PandoraResum.xlsx', default="PandoraResum.xlsx", metavar="RUTA")
 	parser.add_argument('-q', '--quiet', help='Nomes mostra els errors i el missatge de acabada per pantalla.', action="store_false")
 	parser.add_argument('-v', '--versio', help='Mostra la versio', action='version', version='PandoraFMS_API-NPP v'+__version__)
-
-
-	if exists("config/config.yaml"):
-		configuracio = True
-	else:
+	
+	ruta = os.path.dirname(os.path.abspath(__file__))
+	conf = ruta+"/config/config.yaml"
+	if not(os.path.exists(ruta+"/config")):
+		os.mkdir(ruta+"/config")
+	if not(os.path.exists(ruta+"/errorLogs")):
+		os.mkdir(ruta+"/errorLogs")
+	if not(exists(conf)):
 		print("Emplena el fitxer de configuracio de Base de Dades a config/config.yaml")
 		article_info = [
 			{
@@ -33,10 +37,10 @@ def main():
 				}
 			}
 		]
-		with open("config/config.yaml", 'w') as yamlfile:
+		with open(conf, 'w') as yamlfile:
 			data = yaml.dump(article_info, yamlfile)
 
-	with open("config/config.yaml", "r") as yamlfile:
+	with open(conf, "r") as yamlfile:
 		data = yaml.load(yamlfile, Loader=yaml.FullLoader)
 
 	servidor = data[0]['BD']['host']
@@ -51,7 +55,7 @@ def main():
 			database="pandora"
 			)
 		mycursor = mydb.cursor(buffered=True)
-		print("Access BDD correcte")
+		print("Access MySQL correcte")
 	except:
 		try:
 			mydb =mysql.connector.connect(
@@ -71,9 +75,8 @@ def main():
 			mycursor = mydb.cursor(buffered=True)
 			mycursor.execute("CREATE TABLE credencials (usuari VARCHAR(255), contassenya VARCHAR(255), apipassw VARCHAR(255), host VARCHAR(255));")
 		except:
-			print("Login BDD incorrecte")
+			print("Login MySQL incorrecte o MySQL no instal·lat")
 			quit()
-	taulabd = []
 
 	mycursor.execute("SELECT * FROM credencials")
 	resultatbd = mycursor.fetchall()
@@ -99,7 +102,7 @@ def main():
 		print("Error de conexio")
 		now = datetime.datetime.now()
 		date_string = now.strftime('%Y-%m-%d--%H-%M-%S-Connexio')
-		f = open("errorLogs/"+date_string+".txt",'w')
+		f = open(ruta+"/errorLogs/"+date_string+".txt",'w')
 		f.write("Error de conexio"+str(e))
 		f.close()
 
@@ -136,15 +139,10 @@ def main():
 	if args.excel:
 		workbook = load_workbook(filename = fitxer)
 
-
-
-	futuraLlistaJson=""
-	indexG = 0
-	indexA = 0
 	llistaAgents = []
 	llistaGrups = [{"grupID": 0, "SenseGrup" : []}]
 
-	def escriptor(workbook, z, y, grup, agent): #z contadorAgent y contadorGrup
+	def escriptor(workbook, z, y, grup, agent): #z contadorAgent | y contadorGrup
 		if args.excel:
 			wsdefault = workbook['Sheet']
 		if z == 0 and args.excel:
@@ -220,20 +218,19 @@ def main():
 			print("Error de resposta")
 			now = datetime.datetime.now()
 			date_string = now.strftime('%Y-%m-%d--%H-%M-%S-resposta')
-			f = open("errorLogs/"+date_string+".txt",'w')
+			f = open(ruta+"/errorLogs/"+date_string+".txt",'w')
 			f.write("Error de resposta "+ str(e) +treeAgents)
 			f.close()
 		else:
 			print("Error de resposta")
 			now = datetime.datetime.now()
 			date_string = now.strftime('%Y-%m-%d--%H-%M-%S-resposta')
-			f = open("errorLogs/"+date_string+".txt",'w')
+			f = open(ruta+"/errorLogs/"+date_string+".txt",'w')
 			f.write("Error de resposta "+str(e)+ str(agentsFull))
 			f.close()
 		print(e)
 
 	myList = [{"grups" : llistaGrups}]
-	os.remove("dadesPandora.json")
 	try:
 		with open("dadesPandora.json", 'w') as f:
 			json.dump(myList, f, indent = 4)
@@ -241,8 +238,11 @@ def main():
 			print("Error d'escriptura de json")
 			now = datetime.datetime.now()
 			date_string = now.strftime('%Y-%m-%d--%H-%M-%S-json')
-			f = open("errorLogs/"+date_string+".txt",'w')
+			f = open(ruta+"/errorLogs/"+date_string+".txt",'w')
 			f.write("Error d'escriptura de json "+str(e))
 			f.close()
 	if not(args.quiet):
 		print("Done")
+	
+if __name__ =='__main__':
+    main()
