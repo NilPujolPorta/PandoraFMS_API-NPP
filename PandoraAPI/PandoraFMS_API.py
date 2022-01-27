@@ -11,16 +11,18 @@ import argparse
 import mysql.connector
 import yaml
 
-__version__ = "1.3.2"
+__version__ = "1.3.3"
 
 def main(args):
+	ruta = os.path.dirname(os.path.abspath(__file__))
 	parser = argparse.ArgumentParser(description='Una API per a recullir informacio de la web de PandoraFMS.')
 	parser.add_argument('-e', '--excel', help='Guardar la informacio a un excel, per defecte esta desactivat', action="store_true")
 	parser.add_argument('-f', '--file', help='Especificar el fitxer de excel a on guardar. Per defecte es: PandoraResum.xlsx', default="PandoraResum.xlsx", metavar="RUTA")
+	parser.add_argument('--json-file', help='El directori a on es guardara el fitxer de dades json. Per defecte es:'+ruta, default=ruta, metavar='RUTA')
 	parser.add_argument('-q', '--quiet', help='Nomes mostra els errors i el missatge de acabada per pantalla.', action="store_false")
 	parser.add_argument('-v', '--versio', help='Mostra la versio', action='version', version='PandoraFMS_API-NPP v'+__version__)
 	
-	ruta = os.path.dirname(os.path.abspath(__file__))
+
 	conf = ruta+"/config/config.yaml"
 	if not(os.path.exists(ruta+"/config")):
 		os.mkdir(ruta+"/config")
@@ -232,7 +234,7 @@ def main(args):
 
 	myList = [{"grups" : llistaGrups}]
 	try:
-		with open("dadesPandora.json", 'w') as f:
+		with open(args.json_file+"/dadesPandora.json", 'w') as f:
 			json.dump(myList, f, indent = 4)
 	except Exception as e:
 			print("Error d'escriptura de json")
