@@ -13,7 +13,7 @@ import yaml
 
 __version__ = "1.3.1"
 
-def main():
+def main(args):
 	parser = argparse.ArgumentParser(description='Una API per a recullir informacio de la web de PandoraFMS.')
 	parser.add_argument('-e', '--excel', help='Guardar la informacio a un excel, per defecte esta desactivat', action="store_true")
 	parser.add_argument('-f', '--file', help='Especificar el fitxer de excel a on guardar. Per defecte es: PandoraResum.xlsx', default="PandoraResum.xlsx", metavar="RUTA")
@@ -81,7 +81,7 @@ def main():
 	mycursor.execute("SELECT * FROM credencials")
 	resultatbd = mycursor.fetchall()
 	parser.add_argument('-w', '--web', help='Especificar la web de PandoraFMS a on accedir.', default=resultatbd[0][3], metavar="URL")
-	args = parser.parse_args()
+	args = parser.parse_args(args)
 
 	url = args.web
 	apipassw = resultatbd[0][2]
