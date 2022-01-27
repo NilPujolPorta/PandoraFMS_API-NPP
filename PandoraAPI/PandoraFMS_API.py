@@ -11,7 +11,7 @@ import argparse
 import mysql.connector
 import yaml
 
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 def main(args):
 	parser = argparse.ArgumentParser(description='Una API per a recullir informacio de la web de PandoraFMS.')
