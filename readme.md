@@ -45,7 +45,8 @@ Una API per a recullir informacio de la web de PandoraFMS.
 optional arguments:
   -h, --help            show this help message and exit
   -e, --excel           Guardar la informacio a un excel, per defecte esta desactivat
-  -f RUTA, --file RUTA  Especificar el fitxer de excel a on guardar. Per defecte es: PandoraResum.xlsx
+  -f RUTA, --file RUTA  La ruta(fitxer inclos) a on guardar el excel. Per defecte es: PandoraResum.xlsx
+  --json-file RUTA      La ruta(fitxer inclos) a on es guardara el fitxer de dades json. Per defecte es: dadesPandora.json
   -q, --quiet           Nomes mostra els errors i el missatge de acabada per pantalla.
   -v, --versio          Mostra la versio
   -w URL, --web URL     Especificar la web de PandoraFMS a on accedir.
