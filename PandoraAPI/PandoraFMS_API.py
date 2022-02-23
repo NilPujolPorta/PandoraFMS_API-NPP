@@ -11,7 +11,7 @@ import argparse
 import mysql.connector
 import yaml
 
-__version__ = "1.3.4"
+__version__ = "1.3.5"
 
 def main(args=None):
 	ruta = os.path.dirname(os.path.abspath(__file__))
@@ -79,7 +79,7 @@ def main(args=None):
 			mycursor.execute("CREATE TABLE credencials (usuari VARCHAR(255), contassenya VARCHAR(255), apipassw VARCHAR(255), host VARCHAR(255));")
 		except:
 			print("Login MySQL incorrecte o MySQL no instal·lat")
-			quit()
+			return
 
 	mycursor.execute("SELECT * FROM credencials")
 	resultatbd = mycursor.fetchall()
