@@ -9,7 +9,7 @@
 - Executar amb opcio -h per veure mes opcions i funcionalitats.
 - El fitxer compilar.bat transforma el .py en .pyc que es mes eficient i rapid.
 ## Estructura de la base de dades
-En una Base de dades que es digui "synology" un taula anomenada "dispositius":
+En una Base de dades que es digui "pandora" un taula anomenada "credencials":
 ```
 "usuari" usuari de pandora
 
